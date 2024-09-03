@@ -48,10 +48,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         text_paint.set_color(Color::BLACK);
         text_paint.set_anti_alias(true);
 
-        let typeface = skia_safe::Typeface::default();
-        let mut font = skia_safe::Font::new(typeface.clone(), 60.0);
-        font.set_typeface(typeface);
-        font.set_size(60.0);
+        // Create a default font
+        let font_mgr = skia_safe::FontMgr::new();
+        let typeface = font_mgr.match_family_style("Arial", skia_safe::FontStyle::normal()).unwrap();
+        let font = skia_safe::Font::new(typeface, 60.0);
+        // font.set_typeface(typeface);
+        // font.set_size(60.0);
         let text = "7";
         let text_bounds = font.measure_str(text, Some(&text_paint));
         let text_x = center_x - text_bounds.1.width() / 2.0;
